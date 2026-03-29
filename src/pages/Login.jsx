@@ -27,7 +27,7 @@ export default function Login() {
       <div className="login-card">
         <div className="login-header">
           <Wine className="login-icon" size={48} />
-          <h1>Cellar Admin</h1>
+          <h1>My Cellar</h1>
           <p>Sign in to manage your collection</p>
         </div>
         
