@@ -1,0 +1,877 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
+
+:root {
+  /* Minimalist Theme (Default) */
+  --bg-color: #fcfcfc;
+  --text-main: #1a1a1a;
+  --text-muted: #666666;
+  --accent: #b42b51;
+  /* Wine red */
+  --accent-light: #fce7ec;
+  --border: #eaeaea;
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --card-bg: #ffffff;
+  --radius: 8px;
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+[data-theme='classic'] {
+  --bg-color: #f4f1ea;
+  /* warm paper */
+  --text-main: #2b2b2b;
+  --text-muted: #5c5c5c;
+  --accent: #8b1c31;
+  /* Deep burgundy */
+  --accent-light: #e6dac3;
+  --border: #d4cbb8;
+  --font-family: 'Playfair Display', serif;
+  --card-bg: #fdfbf7;
+  --radius: 4px;
+  --shadow: 0 4px 20px rgba(139, 28, 49, 0.05);
+}
+
+[data-theme='dark'] {
+  --bg-color: #121212;
+  --text-main: #e0e0e0;
+  --text-muted: #a0a0a0;
+  --accent: #e25b74;
+  --accent-light: #2a1116;
+  --border: #333333;
+  --font-family: 'Inter', sans-serif;
+  --card-bg: #1e1e1e;
+  --radius: 12px;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  transition: background-color 0.4s ease, color 0.4s ease;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+  border: none;
+  background: none;
+}
+
+input,
+select,
+textarea {
+  font-family: inherit;
+  outline: none;
+}
+
+/* Login Page Styles */
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.login-card {
+  background: var(--card-bg);
+  padding: 3rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  width: 100%;
+  max-width: 420px;
+  border: 1px solid var(--border);
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.login-icon {
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+.login-header h1 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.login-header p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.login-error {
+  background: #fee2e2;
+  color: #b91c1c;
+  padding: 0.75rem;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  border: 1px solid #f87171;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 1rem;
+  color: var(--text-muted);
+}
+
+.input-group input {
+  width: 100%;
+  padding: 0.8rem 1rem 0.8rem 3rem;
+  background: var(--bg-color);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-main);
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.input-group input:focus {
+  border-color: var(--accent);
+}
+
+.login-button {
+  width: 100%;
+  padding: 0.9rem;
+  background: var(--text-main);
+  color: var(--bg-color);
+  border-radius: var(--radius);
+  font-size: 1rem;
+  font-weight: 500;
+  transition: opacity 0.2s;
+  margin-top: 0.5rem;
+}
+
+.login-button:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+/* Admin Layout Base */
+.admin-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 2rem;
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.brand h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text-main);
+}
+
+.user-controls {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.logout-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-muted);
+  transition: color 0.2s;
+}
+
+.logout-button:hover {
+  color: var(--accent);
+}
+
+.admin-main {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.admin-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.admin-top-bar h1 {
+  font-size: 1.8rem;
+  font-weight: 500;
+}
+
+.add-wine-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--accent);
+  color: white;
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius);
+  font-weight: 500;
+  transition: filter 0.2s;
+}
+
+.add-wine-button:hover {
+  filter: brightness(1.1);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--text-muted);
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  border: 1px dashed var(--border);
+  margin-top: 2rem;
+}
+
+/* Wine Form Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal-content {
+  background: var(--card-bg);
+  width: 100%;
+  max-width: 600px;
+  padding: 2.5rem;
+  border-radius: var(--radius);
+  position: relative;
+  box-shadow: var(--shadow);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.close-button {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  color: var(--text-muted);
+  transition: color 0.2s;
+}
+
+.close-button:hover {
+  color: var(--text-main);
+}
+
+.wine-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group.full-width {
+  width: 100%;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-color);
+  color: var(--text-main);
+  transition: border-color 0.2s;
+  font-size: 0.95rem;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--accent);
+}
+
+.save-button {
+  padding: 1rem;
+  background: var(--accent);
+  color: white;
+  border-radius: var(--radius);
+  font-weight: 500;
+  font-size: 1rem;
+  margin-top: 1rem;
+  transition: filter 0.2s;
+}
+
+.save-button:hover:not(:disabled) {
+  filter: brightness(1.1);
+}
+
+.save-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Admin Wine List Table Placeholder Ext */
+.admin-wine-list {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card-bg);
+  overflow: hidden;
+}
+
+.table-header {
+  display: flex;
+  padding: 1rem 1.5rem;
+  background: var(--bg-color);
+  border-bottom: 1px solid var(--border);
+  font-weight: 500;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.table-row {
+  display: flex;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  align-items: center;
+  transition: background 0.2s;
+}
+
+.table-row:last-child {
+  border-bottom: none;
+}
+
+.table-row:hover {
+  background: var(--bg-color);
+}
+
+.col-name {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.wine-notes-preview {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.col-type {
+  flex: 1;
+}
+
+.type-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  background: var(--accent-light);
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.col-region {
+  flex: 1.5;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.col-vintage,
+.col-price {
+  flex: 0.8;
+  font-size: 0.9rem;
+}
+
+.col-actions {
+  flex: 0.5;
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.action-btn {
+  color: var(--text-muted);
+  transition: color 0.2s;
+}
+
+.action-btn.edit:hover {
+  color: var(--text-main);
+}
+
+.action-btn.delete:hover {
+  color: #ef4444;
+}
+
+/* Public Cellar */
+.public-layout {
+  min-height: 100vh;
+  padding: 4rem 1rem;
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.public-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.header-icon {
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+}
+
+.public-header h1 {
+  font-size: 2.8rem;
+  font-weight: 500;
+  margin-bottom: 1.2rem;
+  letter-spacing: -0.02em;
+}
+
+.header-divider {
+  width: 40px;
+  height: 2px;
+  background: var(--accent);
+  margin: 0 auto 1.2rem;
+}
+
+.public-header p {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.public-main {
+  flex: 1;
+}
+
+.public-footer {
+  margin-top: 6rem;
+  text-align: center;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* Theme Switcher and Layout Toggles */
+.theme-switcher { position: fixed; bottom: 2rem; right: 2rem; z-index: 100; display: flex; align-items: center; background: var(--card-bg); padding: 0.6rem 1.2rem; border-radius: 40px; box-shadow: var(--shadow); border: 1px solid var(--border); transition: all 0.3s; gap: 1rem; }
+.theme-group { display: flex; align-items: center; gap: 0.5rem; }
+.theme-divider { width: 1px; height: 20px; background: var(--border); }
+.theme-icon-small { color: var(--text-muted); margin-right: 0.25rem; }
+.theme-group button { padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.85rem; color: var(--text-muted); transition: all 0.2s; white-space: nowrap; }
+.theme-group button:hover { color: var(--text-main); }
+.theme-group button.active { background: var(--accent-light); color: var(--accent); font-weight: 500; }
+
+/* Wine List Controls */
+.controls-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.sort-group {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.sort-group label {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+}
+
+.sort-group select {
+  appearance: none;
+  background: transparent;
+  border: 1px solid var(--border);
+  padding: 0.6rem 2.5rem 0.6rem 1rem;
+  border-radius: var(--radius);
+  color: var(--text-main);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.8rem center;
+  background-size: 1em;
+}
+
+.sort-group select:hover,
+.sort-group select:focus {
+  border-color: var(--accent);
+}
+
+/* Wine Groups */
+.wine-category {
+  margin-bottom: 4rem;
+}
+
+.category-title {
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--text-main);
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.category-title span {
+  display: inline-block;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--accent);
+}
+
+.category-items {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+}
+
+/* Public Wine Item Card */
+.wine-item-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  padding: 2rem;
+  border-radius: var(--radius);
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+
+.wine-item-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
+  border-color: var(--accent-light);
+}
+
+.wine-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+}
+
+.wine-item-name {
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.3;
+  font-family: 'Playfair Display', serif;
+}
+
+[data-theme='minimalist'] .wine-item-name,
+[data-theme='dark'] .wine-item-name {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+}
+
+.wine-item-vintage {
+  font-size: 0.95rem;
+  color: var(--accent);
+  font-weight: 500;
+  padding-left: 1rem;
+}
+
+.wine-item-meta {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 1.2rem;
+}
+
+.wine-item-notes {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  font-style: italic;
+  color: var(--text-main);
+  opacity: 0.85;
+  border-left: 2px solid var(--accent-light);
+  padding-left: 1rem;
+}
+
+/* Status Screens */
+.loading-screen,
+.error-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 1rem;
+  color: var(--text-muted);
+  background: var(--bg-color);
+}
+
+.error-icon {
+  color: #ef4444;
+  margin-bottom: 1rem;
+}
+
+/* Google Auth Button & Toggles */
+.google-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.9rem;
+  background: var(--card-bg);
+  color: var(--text-main);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  margin-bottom: 0.5rem;
+}
+
+.google-button:hover {
+  background: var(--border);
+  border-color: var(--text-muted);
+}
+
+.google-icon {
+  width: 22px;
+  height: 22px;
+}
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  margin: 1.5rem 0;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid var(--border);
+}
+
+.auth-divider span {
+  padding: 0 1rem;
+  font-weight: 500;
+}
+
+.toggle-auth {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.toggle-auth button {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: underline;
+  margin-left: 0.35rem;
+}
+
+/* Dynamic Type Colors */
+.type-color-red {
+  --accent: #b42b51;
+  --accent-light: #fce7ec;
+}
+
+[data-theme='classic'] .type-color-red {
+  --accent: #8b1c31;
+  --accent-light: #e6dac3;
+}
+
+[data-theme='dark'] .type-color-red {
+  --accent: #e25b74;
+  --accent-light: #2a1116;
+}
+
+.type-color-white {
+  --accent: #a39023;
+  --accent-light: #fdfce8;
+}
+
+[data-theme='classic'] .type-color-white {
+  --accent: #786915;
+  --accent-light: #e4e2c9;
+}
+
+[data-theme='dark'] .type-color-white {
+  --accent: #d4c35b;
+  --accent-light: #282613;
+}
+
+.type-color-champagne,
+.type-color-sparkling {
+  --accent: #c49229;
+  --accent-light: #fdf8eb;
+}
+
+[data-theme='classic'] .type-color-champagne,
+[data-theme='classic'] .type-color-sparkling {
+  --accent: #966f19;
+  --accent-light: #eee5d0;
+}
+
+[data-theme='dark'] .type-color-champagne,
+[data-theme='dark'] .type-color-sparkling {
+  --accent: #e6b95c;
+  --accent-light: #2d2411;
+}
+
+.type-color-rose {
+  --accent: #d76a85;
+  --accent-light: #fdf2f5;
+}
+
+[data-theme='classic'] .type-color-rose {
+  --accent: #a44860;
+  --accent-light: #ecdce0;
+}
+
+[data-theme='dark'] .type-color-rose {
+  --accent: #f29bb1;
+  --accent-light: #2d181d;
+}
+
+.type-color-dessert {
+  --accent: #c97a2c;
+  --accent-light: #fcf4ec;
+}
+
+[data-theme='classic'] .type-color-dessert {
+  --accent: #9a591a;
+  --accent-light: #eadbd0;
+}
+
+[data-theme='dark'] .type-color-dessert {
+  --accent: #f0a962;
+  --accent-light: #2d1d11;
+}
+
+.type-color-other {
+  --accent: #6b7280;
+  --accent-light: #f3f4f6;
+}
+
+[data-theme='classic'] .type-color-other {
+  --accent: #4b5563;
+  --accent-light: #e5e7eb;
+}
+
+[data-theme='dark'] .type-color-other {
+  --accent: #9ca3af;
+  --accent-light: #1f2937;
+}
+
+/* Restaurant List Layout Override */
+[data-layout='restaurant'] .category-items {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+[data-layout='restaurant'] .wine-item-card {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0 0 1.25rem 0;
+  border-bottom: 1px dashed var(--border);
+  box-shadow: none;
+  transform: none;
+  transition: border-color 0.2s;
+}
+[data-layout='restaurant'] .wine-item-card:hover {
+  transform: none;
+  box-shadow: none;
+  border-bottom-color: var(--accent);
+}
+[data-layout='restaurant'] .wine-item-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 0.25rem;
+}
+[data-layout='restaurant'] .wine-item-meta {
+  margin-bottom: 0.5rem;
+}
+[data-layout='restaurant'] .wine-item-vintage {
+  padding-left: 0;
+  font-size: 1rem;
+}
