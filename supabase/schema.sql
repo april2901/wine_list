@@ -105,3 +105,25 @@ select
 from auth.users
 where id not in (select id from public.profiles)
 on conflict (id) do nothing;
+
+-- Create friends table
+create table if not exists friends (
+  id uuid default gen_random_uuid() primary key,
+  user_id uuid references profiles(id) on delete cascade not null,
+  friend_id uuid references profiles(id) on delete cascade not null,
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null,
+  unique(user_id, friend_id),
+  constraint friends_cannot_add_self check (user_id != friend_id)
+);
+
+-- Enable RLS on friends
+alter table friends enable row level security;
+
+create policy "Users can view their own friends." on friends
+  for select using (auth.uid() = user_id);
+
+create policy "Users can add friends." on friends
+  for insert with check (auth.uid() = user_id);
+
+create policy "Users can remove friends." on friends
+  for delete using (auth.uid() = user_id);

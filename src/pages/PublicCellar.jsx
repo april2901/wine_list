@@ -3,10 +3,13 @@ import { useParams } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import WineListDisplay from '../components/WineListDisplay';
 import ThemeSwitcher from '../components/ThemeSwitcher';
-import { Wine } from 'lucide-react';
+import { Wine, LogIn } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
+import { Link } from 'react-router-dom';
 
 export default function PublicCellar() {
   const { username } = useParams();
+  const { user } = useAuth();
   const [profile, setProfile] = useState(null);
   const [wines, setWines] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -60,9 +63,18 @@ export default function PublicCellar() {
     <div className="public-layout">
       <ThemeSwitcher />
       
+      {!user && (
+        <div className="public-login-action">
+          <Link to="/login" className="public-login-btn">
+            <LogIn size={16} />
+            <span>Login to your cellar</span>
+          </Link>
+        </div>
+      )}
+      
       <header className="public-header">
         <Wine size={40} className="header-icon" />
-        <h1>{profile.display_name || profile.username}'s Cellar</h1>
+        <h1>{profile.display_name || profile.username}&apos;s Cellar</h1>
         <div className="header-divider"></div>
         <p>A Curated Collection</p>
       </header>
