@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabase';
-import { Users, X, UserPlus, Search, Wine, Trash2 } from 'lucide-react';
+import { Users, X, UserPlus, Search, Wine, Trash2, LayoutDashboard } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 export default function FriendsSidebar() {
@@ -176,10 +176,24 @@ export default function FriendsSidebar() {
           ) : (
             <div className="sidebar-auth-content">
               
-              <button className="my-cellar-nav-btn" onClick={handleMyCellarClick}>
-                <Wine size={18} />
-                <span>내 셀러 보기</span>
-              </button>
+              <div style={{ display: 'flex', gap: '0.5rem' }}>
+                <button 
+                  className="my-cellar-nav-btn" 
+                  onClick={() => { setIsOpen(false); navigate('/admin'); }}
+                  style={{ flex: 1, background: 'var(--card-bg)', color: 'var(--text-main)', border: '1px solid var(--border)' }}
+                >
+                  <LayoutDashboard size={16} />
+                  <span>스토리지 관리</span>
+                </button>
+                <button 
+                  className="my-cellar-nav-btn" 
+                  onClick={handleMyCellarClick}
+                  style={{ flex: 1 }}
+                >
+                  <Wine size={16} />
+                  <span>내 셀러 보기</span>
+                </button>
+              </div>
               
               <div className="add-friend-section">
                 <form onSubmit={handleAddFriend} className="add-friend-form">
