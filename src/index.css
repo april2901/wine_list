@@ -471,6 +471,57 @@ textarea {
   color: #ef4444;
 }
 
+@media (max-width: 768px) {
+  .table-header {
+    display: none;
+  }
+  
+  .table-row {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.2rem;
+    gap: 0.6rem;
+    position: relative;
+  }
+  
+  .col-name, .col-type, .col-region, .col-vintage, .col-price, .col-actions {
+    flex: none;
+    width: 100%;
+  }
+
+  /* Make name larger on mobile */
+  .col-name strong {
+    font-size: 1.1rem;
+    max-width: 80%; /* avoid overlapping actions */
+  }
+
+  .col-actions {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.2rem;
+    width: auto;
+    justify-content: flex-end;
+  }
+
+  .col-type {
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+  }
+  
+  /* Add labels for readability on mobile cards */
+  .col-region::before { content: "Region: "; font-weight: 500; color: var(--text-muted); font-size: 0.85rem; }
+  .col-vintage::before { content: "Vintage: "; font-weight: 500; color: var(--text-muted); font-size: 0.85rem;}
+  .col-price::before { content: "Price: "; font-weight: 500; color: var(--text-muted); font-size: 0.85rem;}
+  
+  /* Adjust fields to sit nicely */
+  .col-region, .col-vintage, .col-price {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    font-size: 0.95rem;
+  }
+}
+
 /* Public Cellar */
 .public-layout {
   min-height: 100vh;

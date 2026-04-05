@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import WineListDisplay from '../components/WineListDisplay';
 import ThemeSwitcher from '../components/ThemeSwitcher';
-import { Wine, LogIn } from 'lucide-react';
+import { Wine, LogIn, LogOut } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { Link } from 'react-router-dom';
 
@@ -63,14 +63,19 @@ export default function PublicCellar() {
     <div className="public-layout">
       <ThemeSwitcher />
       
-      {!user && (
-        <div className="public-login-action">
+      <div className="public-login-action">
+        {!user ? (
           <Link to="/login" className="public-login-btn">
             <LogIn size={16} />
-            <span>Login to your cellar</span>
+            <span>Login</span>
           </Link>
-        </div>
-      )}
+        ) : (
+          <button onClick={() => supabase.auth.signOut()} className="public-login-btn">
+            <LogOut size={16} />
+            <span>Logout</span>
+          </button>
+        )}
+      </div>
       
       <header className="public-header">
         <Wine size={40} className="header-icon" />
