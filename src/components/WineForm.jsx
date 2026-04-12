@@ -7,7 +7,7 @@ const WINE_TYPES = ['Red', 'White', 'Champagne', 'Sparkling', 'Rose', 'Dessert',
 export default function WineForm({ user, wineToEdit, onClose, onSave }) {
   const [formData, setFormData] = useState(
     wineToEdit || {
-      name: '', type: 'Red', country: '', region: '', vintage: '', price: '', notes: ''
+      name: '', type: 'Red', country: '', region: '', vintage: '', price: '', notes: '', quantity: 1
     }
   );
   const [loading, setLoading] = useState(false);
@@ -29,6 +29,7 @@ export default function WineForm({ user, wineToEdit, onClose, onSave }) {
       vintage: formData.vintage ? parseInt(formData.vintage) : null,
       price: formData.price ? parseFloat(formData.price) : null,
       notes: formData.notes,
+      quantity: formData.quantity ? parseInt(formData.quantity) : 1,
       owner_id: user.id
     };
 
@@ -84,9 +85,13 @@ export default function WineForm({ user, wineToEdit, onClose, onSave }) {
           </div>
 
           <div className="form-row">
-            <div className="form-group full-width">
+            <div className="form-group">
               <label>Price / 만원 단위 (Hidden from public)</label>
               <input type="number" step="0.01" name="price" value={formData.price || ''} onChange={handleChange} placeholder="e.g. 6.5 (6만 5천원)" />
+            </div>
+            <div className="form-group">
+              <label>Quantity</label>
+              <input type="number" name="quantity" min="0" value={formData.quantity || ''} onChange={handleChange} placeholder="e.g. 1" required />
             </div>
           </div>
 

@@ -67,6 +67,25 @@ export default function AdminDashboard() {
     setShowForm(false);
   };
 
+  const handleUpdateQuantity = async (id, newQuantity) => {
+    if (newQuantity < 0) return;
+    
+    // Optimistic update locally
+    setWines(wines.map(w => w.id === id ? { ...w, quantity: newQuantity } : w));
+    
+    // Update in Supabase
+    const { error } = await supabase
+      .from('wines')
+      .update({ quantity: newQuantity })
+      .eq('id', id);
+      
+    if (error) {
+      // Revert if error occurs
+      alert('Error updating quantity: ' + error.message);
+      fetchWines(); 
+    }
+  };
+
   return (
     <div className="admin-layout">
       <header className="admin-header">
@@ -106,6 +125,7 @@ export default function AdminDashboard() {
               wines={wines} 
               onEdit={handleEditWine} 
               onDelete={handleDeleteWine} 
+              onUpdateQuantity={handleUpdateQuantity}
             />
           )}
         </div>

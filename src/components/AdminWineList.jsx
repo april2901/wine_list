@@ -1,7 +1,7 @@
 import React from 'react';
 import { Edit2, Trash2 } from 'lucide-react';
 
-export default function AdminWineList({ wines, onEdit, onDelete }) {
+export default function AdminWineList({ wines, onEdit, onDelete, onUpdateQuantity }) {
   if (wines.length === 0) {
     return <p className="empty-state">Your cellar is currently empty. Add some wines to get started!</p>;
   }
@@ -14,6 +14,7 @@ export default function AdminWineList({ wines, onEdit, onDelete }) {
         <div className="col-region">Region</div>
         <div className="col-vintage">Vintage</div>
         <div className="col-price">Price</div>
+        <div className="col-qty">Qty</div>
         <div className="col-actions">Actions</div>
       </div>
       
@@ -27,6 +28,22 @@ export default function AdminWineList({ wines, onEdit, onDelete }) {
           <div className="col-region">{wine.country} {wine.region && `- ${wine.region}`}</div>
           <div className="col-vintage">{wine.vintage || '-'}</div>
           <div className="col-price">{wine.price ? `${wine.price}만원` : '-'}</div>
+          <div className="col-qty">
+            <div className="qty-controls">
+              <button 
+                type="button" 
+                className="qty-btn" 
+                onClick={() => onUpdateQuantity(wine.id, (wine.quantity || 1) - 1)}
+                disabled={(wine.quantity || 1) <= 0}
+              >-</button>
+              <span className="qty-value">{wine.quantity || 1}</span>
+              <button 
+                type="button" 
+                className="qty-btn" 
+                onClick={() => onUpdateQuantity(wine.id, (wine.quantity || 1) + 1)}
+              >+</button>
+            </div>
+          </div>
           <div className="col-actions">
             <button className="action-btn edit" onClick={() => onEdit(wine)} title="Edit">
               <Edit2 size={16} />

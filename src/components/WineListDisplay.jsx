@@ -3,6 +3,7 @@ import React, { useState, useMemo } from 'react';
 export default function WineListDisplay({ wines }) {
   const [primarySort, setPrimarySort] = useState('type');
   const [secondarySort, setSecondarySort] = useState('price');
+  const [showQuantity, setShowQuantity] = useState(false);
 
   const sortedWines = useMemo(() => {
     const sorted = [...wines].sort((a, b) => {
@@ -43,6 +44,18 @@ export default function WineListDisplay({ wines }) {
             <option value="price">Value</option>
           </select>
         </div>
+        <div className="sort-group toggle-group">
+          <label htmlFor="show-qty-toggle" style={{ cursor: 'pointer', userSelect: 'none' }}>Show Quantity</label>
+          <label className="toggle-switch">
+            <input 
+              type="checkbox" 
+              id="show-qty-toggle"
+              checked={showQuantity}
+              onChange={(e) => setShowQuantity(e.target.checked)}
+            />
+            <span className="slider"></span>
+          </label>
+        </div>
       </div>
 
       <div className="wine-groups">
@@ -56,7 +69,14 @@ export default function WineListDisplay({ wines }) {
                 <div key={wine.id} className={`wine-item-card type-color-${wine.type.toLowerCase()}`}>
                   <div className="wine-item-header">
                     <h3 className="wine-item-name">{wine.name}</h3>
-                    {wine.vintage && <span className="wine-item-vintage">{wine.vintage}</span>}
+                    <div className="wine-item-badges">
+                      {wine.vintage && <span className="wine-item-vintage">{wine.vintage}</span>}
+                      {showQuantity && (
+                        <span className="wine-item-quantity" style={{ whiteSpace: 'nowrap' }}>
+                          {(wine.quantity || 1) === 1 ? '1 bottle' : `${wine.quantity || 1} bottles`}
+                        </span>
+                      )}
+                    </div>
                   </div>
                   <div className="wine-item-meta">
                     {primarySort === 'type' && wine.country && <span>{wine.country}</span>}

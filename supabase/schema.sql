@@ -37,6 +37,7 @@ create table if not exists wines (
   vintage integer,
   price numeric,
   notes text,
+  quantity integer default 1 not null,
   created_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
 
