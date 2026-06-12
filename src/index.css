@@ -1486,50 +1486,64 @@ input:checked + .slider:before {
 .wine-item-card.has-image {
   padding: 0;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: stretch;
   overflow: hidden;
 }
 
 .wine-item-image-wrapper {
-  width: 100%;
-  height: 180px;
+  width: 120px;
+  min-width: 120px;
   position: relative;
   overflow: hidden;
   background: var(--bg-color);
-  border-bottom: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
 }
 
 .wine-item-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  max-height: 160px;
+  object-fit: contain; /* Preserve aspect ratio, no cropping */
   transition: transform 0.4s ease;
 }
 
 .wine-item-card:hover .wine-item-image {
-  transform: scale(1.05);
+  transform: scale(1.08);
 }
 
 .wine-item-card.has-image .wine-item-content {
-  padding: 1.5rem 2rem 2rem 2rem;
+  padding: 1.25rem 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 /* Restaurant layout image thumbnail */
 .wine-item-menu-thumbnail-wrapper {
   display: none; /* Hide by default in cards view */
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 80px; /* Taller for vertical wine bottles */
   border-radius: var(--radius);
   overflow: hidden;
   flex-shrink: 0;
   border: 1px solid var(--border);
   background: var(--bg-color);
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .wine-item-menu-thumbnail {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain; /* Prevent cropping in restaurant menu */
 }
 
 [data-layout='restaurant'] .wine-item-card.has-image {
@@ -1543,7 +1557,7 @@ input:checked + .slider:before {
 }
 
 [data-layout='restaurant'] .wine-item-menu-thumbnail-wrapper {
-  display: block; /* Show in restaurant view */
+  display: flex; /* Show in restaurant view */
 }
 
 [data-layout='restaurant'] .wine-item-card.has-image .wine-item-image-wrapper {
@@ -1567,12 +1581,36 @@ input:checked + .slider:before {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  padding: 2px;
 }
 
 .admin-wine-thumbnail {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain; /* Contain the full bottle in admin view */
+}
+
+/* Media query to adjust horizontal layout on smaller screens */
+@media (max-width: 580px) {
+  .wine-item-card.has-image {
+    flex-direction: column;
+  }
+  
+  .wine-item-image-wrapper {
+    width: 100%;
+    height: 160px;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding: 0.5rem;
+  }
+  
+  .wine-item-image {
+    max-height: 140px;
+  }
+  
+  .wine-item-card.has-image .wine-item-content {
+    padding: 1.25rem;
+  }
 }
 
 .col-name-container {
