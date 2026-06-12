@@ -1,24 +1,72 @@
 import React, { useState } from 'react';
 import { supabase } from '../lib/supabase';
-import { X } from 'lucide-react';
+import { X, UploadCloud } from 'lucide-react';
 
 const WINE_TYPES = ['Red', 'White', 'Champagne', 'Sparkling', 'Rose', 'Dessert', 'Other'];
 
 export default function WineForm({ user, wineToEdit, onClose, onSave }) {
   const [formData, setFormData] = useState(
-    wineToEdit || {
-      name: '', type: 'Red', country: '', region: '', vintage: '', price: '', notes: '', quantity: 1
-    }
+    wineToEdit 
+      ? { ...wineToEdit, image_url: wineToEdit.image_url || '' }
+      : { name: '', type: 'Red', country: '', region: '', vintage: '', price: '', notes: '', quantity: 1, image_url: '' }
   );
   const [loading, setLoading] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    // Check size (e.g. max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      alert('File size exceeds the 5MB limit.');
+      return;
+    }
+
+    setUploading(true);
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${user.id}/${Date.now()}.${fileExt}`;
+      const filePath = fileName;
+
+      const { error: uploadError } = await supabase.storage
+        .from('wine-images')
+        .upload(filePath, file, {
+          cacheControl: '3600',
+          upsert: true
+        });
+
+      if (uploadError) {
+        throw uploadError;
+      }
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('wine-images')
+        .getPublicUrl(filePath);
+
+      setFormData(prev => ({ ...prev, image_url: publicUrl }));
+    } catch (error) {
+      alert('Error uploading image: ' + error.message);
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setFormData(prev => ({ ...prev, image_url: '' }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (uploading) {
+      alert('Please wait for the image upload to complete.');
+      return;
+    }
     setLoading(true);
 
     const wineData = {
@@ -30,6 +78,7 @@ export default function WineForm({ user, wineToEdit, onClose, onSave }) {
       price: formData.price ? parseFloat(formData.price) : null,
       notes: formData.notes,
       quantity: formData.quantity ? parseInt(formData.quantity) : 1,
+      image_url: formData.image_url,
       owner_id: user.id
     };
 
@@ -93,6 +142,36 @@ export default function WineForm({ user, wineToEdit, onClose, onSave }) {
               <label>Quantity</label>
               <input type="number" name="quantity" min="0" value={formData.quantity || ''} onChange={handleChange} placeholder="e.g. 1" required />
             </div>
+          </div>
+
+          <div className="form-group full-width image-upload-wrapper">
+            <label>Wine Photo</label>
+            {formData.image_url ? (
+              <div className="image-upload-preview-container">
+                <img src={formData.image_url} alt="Wine preview" className="image-upload-preview" />
+                <button type="button" className="image-remove-btn" onClick={handleRemoveImage} title="Remove image">
+                  <X size={16} />
+                </button>
+              </div>
+            ) : (
+              <label className="image-upload-dropzone">
+                {uploading ? (
+                  <div className="upload-loading-spinner"></div>
+                ) : (
+                  <>
+                    <UploadCloud size={28} className="image-upload-dropzone-icon" />
+                    <span>Click to upload photo</span>
+                    <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>PNG, JPG, GIF up to 5MB</span>
+                  </>
+                )}
+                <input 
+                  type="file" 
+                  accept="image/*" 
+                  onChange={handleImageUpload} 
+                  disabled={uploading} 
+                />
+              </label>
+            )}
           </div>
 
           <div className="form-group full-width">

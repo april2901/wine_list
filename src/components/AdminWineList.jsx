@@ -21,8 +21,19 @@ export default function AdminWineList({ wines, onEdit, onDelete, onUpdateQuantit
       {wines.map(wine => (
         <div key={wine.id} className="table-row">
           <div className="col-name">
-            <strong>{wine.name}</strong>
-            {wine.notes && <span className="wine-notes-preview">{wine.notes.substring(0, 30)}...</span>}
+            <div className="col-name-container">
+              <div className="admin-wine-thumbnail-wrapper">
+                {wine.image_url ? (
+                  <img src={wine.image_url} alt={wine.name} className="admin-wine-thumbnail" />
+                ) : (
+                  <span style={{ fontSize: '1.2rem' }}>🍷</span>
+                )}
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                <strong>{wine.name}</strong>
+                {wine.notes && <span className="wine-notes-preview">{wine.notes.substring(0, 30)}...</span>}
+              </div>
+            </div>
           </div>
           <div className="col-type"><span className={`type-badge type-color-${wine.type.toLowerCase()}`}>{wine.type}</span></div>
           <div className="col-region">{wine.country} {wine.region && `- ${wine.region}`}</div>

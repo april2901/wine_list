@@ -65,28 +65,51 @@ export default function WineListDisplay({ wines }) {
               <span>{groupKey}</span>
             </h2>
             <div className="category-items">
-              {sortedWines[groupKey].map(wine => (
-                <div key={wine.id} className={`wine-item-card type-color-${wine.type.toLowerCase()}`}>
-                  <div className="wine-item-header">
-                    <h3 className="wine-item-name">{wine.name}</h3>
-                    <div className="wine-item-badges">
-                      {wine.vintage && <span className="wine-item-vintage">{wine.vintage}</span>}
-                      {showQuantity && (
-                        <span className="wine-item-quantity" style={{ whiteSpace: 'nowrap' }}>
-                          {(wine.quantity || 1) === 1 ? '1 bottle' : `${wine.quantity || 1} bottles`}
-                        </span>
-                      )}
+              {sortedWines[groupKey].map(wine => {
+                const hasImage = !!wine.image_url;
+                const cardContent = (
+                  <>
+                    <div className="wine-item-header">
+                      <h3 className="wine-item-name">{wine.name}</h3>
+                      <div className="wine-item-badges">
+                        {wine.vintage && <span className="wine-item-vintage">{wine.vintage}</span>}
+                        {showQuantity && (
+                          <span className="wine-item-quantity" style={{ whiteSpace: 'nowrap' }}>
+                            {(wine.quantity || 1) === 1 ? '1 bottle' : `${wine.quantity || 1} bottles`}
+                          </span>
+                        )}
+                      </div>
                     </div>
+                    <div className="wine-item-meta">
+                      {primarySort === 'type' && wine.country && <span>{wine.country}</span>}
+                      {primarySort === 'type' && wine.region && <span> • {wine.region}</span>}
+                      {primarySort === 'region' && <span>{wine.type}</span>}
+                      {primarySort === 'region' && wine.region && <span> • {wine.region}</span>}
+                    </div>
+                    {wine.notes && <p className="wine-item-notes">{wine.notes}</p>}
+                  </>
+                );
+
+                return (
+                  <div key={wine.id} className={`wine-item-card type-color-${wine.type.toLowerCase()} ${hasImage ? 'has-image' : ''}`}>
+                    {hasImage && (
+                      <div className="wine-item-image-wrapper">
+                        <img src={wine.image_url} alt={wine.name} className="wine-item-image" loading="lazy" />
+                      </div>
+                    )}
+                    {hasImage && (
+                      <div className="wine-item-menu-thumbnail-wrapper">
+                        <img src={wine.image_url} alt={wine.name} className="wine-item-menu-thumbnail" loading="lazy" />
+                      </div>
+                    )}
+                    {hasImage ? (
+                      <div className="wine-item-content">{cardContent}</div>
+                    ) : (
+                      cardContent
+                    )}
                   </div>
-                  <div className="wine-item-meta">
-                    {primarySort === 'type' && wine.country && <span>{wine.country}</span>}
-                    {primarySort === 'type' && wine.region && <span> • {wine.region}</span>}
-                    {primarySort === 'region' && <span>{wine.type}</span>}
-                    {primarySort === 'region' && wine.region && <span> • {wine.region}</span>}
-                  </div>
-                  {wine.notes && <p className="wine-item-notes">{wine.notes}</p>}
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         ))}

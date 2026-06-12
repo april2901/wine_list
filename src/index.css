@@ -1392,3 +1392,191 @@ input:checked + .slider:before {
   font-weight: 500;
   font-size: 0.9rem;
 }
+
+/* Image Upload Styles (WineForm) */
+.image-upload-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.image-upload-dropzone {
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: var(--bg-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: var(--text-muted);
+}
+
+.image-upload-dropzone:hover {
+  border-color: var(--accent);
+  color: var(--text-main);
+  background: var(--accent-light);
+  opacity: 0.9;
+}
+
+.image-upload-dropzone input[type="file"] {
+  display: none;
+}
+
+.image-upload-dropzone-icon {
+  color: var(--accent);
+  margin-bottom: 0.25rem;
+}
+
+.image-upload-preview-container {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.image-upload-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-remove-btn {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  border: none;
+  cursor: pointer;
+}
+
+.image-remove-btn:hover {
+  background: rgba(239, 68, 68, 0.9);
+}
+
+.upload-loading-spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: upload-spin 0.8s linear infinite;
+}
+
+@keyframes upload-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Public Card Layout Image Styles */
+.wine-item-card.has-image {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.wine-item-image-wrapper {
+  width: 100%;
+  height: 180px;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-color);
+  border-bottom: 1px solid var(--border);
+}
+
+.wine-item-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.wine-item-card:hover .wine-item-image {
+  transform: scale(1.05);
+}
+
+.wine-item-card.has-image .wine-item-content {
+  padding: 1.5rem 2rem 2rem 2rem;
+}
+
+/* Restaurant layout image thumbnail */
+.wine-item-menu-thumbnail-wrapper {
+  display: none; /* Hide by default in cards view */
+  width: 60px;
+  height: 60px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+  background: var(--bg-color);
+}
+
+.wine-item-menu-thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+[data-layout='restaurant'] .wine-item-card.has-image {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 0 0 1.25rem 0;
+  border-bottom: 1px dashed var(--border);
+  background: transparent;
+}
+
+[data-layout='restaurant'] .wine-item-menu-thumbnail-wrapper {
+  display: block; /* Show in restaurant view */
+}
+
+[data-layout='restaurant'] .wine-item-card.has-image .wine-item-image-wrapper {
+  display: none; /* Hide top card image in restaurant view */
+}
+
+[data-layout='restaurant'] .wine-item-card.has-image .wine-item-content {
+  padding: 0;
+  flex: 1;
+}
+
+/* Admin Table Thumbnail Styles */
+.admin-wine-thumbnail-wrapper {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--bg-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.admin-wine-thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.col-name-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}

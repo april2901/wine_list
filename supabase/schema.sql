@@ -38,6 +38,7 @@ create table if not exists wines (
   price numeric,
   notes text,
   quantity integer default 1 not null,
+  image_url text,
   created_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
 
@@ -128,3 +129,24 @@ create policy "Users can add friends." on friends
 
 create policy "Users can remove friends." on friends
   for delete using (auth.uid() = user_id);
+
+-- Storage bucket configuration for wine images
+-- Run this in your Supabase SQL Editor to set up the storage bucket and its policies
+/*
+insert into storage.buckets (id, name, public)
+values ('wine-images', 'wine-images', true)
+on conflict (id) do nothing;
+
+create policy "Public Access" on storage.objects
+  for select using (bucket_id = 'wine-images');
+
+create policy "Authenticated users can upload wine images" on storage.objects
+  for insert with check (bucket_id = 'wine-images' and auth.role() = 'authenticated');
+
+create policy "Authenticated users can update wine images" on storage.objects
+  for update using (bucket_id = 'wine-images' and auth.role() = 'authenticated');
+
+create policy "Authenticated users can delete wine images" on storage.objects
+  for delete using (bucket_id = 'wine-images' and auth.role() = 'authenticated');
+*/
+
